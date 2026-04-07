@@ -1128,7 +1128,13 @@ td {
     right: 0 !important;
   }
 
-  .mobile-menu-header, .mobile-menu-footer {
+  .mobile-menu-header {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 15px !important;
+  }
+  .mobile-menu-footer {
     display: flex !important;
     flex-direction: column !important;
   }
