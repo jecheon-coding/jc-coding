@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 대시보드 | Coding & Play</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .admin-page { padding: 8rem 0; min-height: 100vh; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+        .admin-section { margin-bottom: 4rem; }
+        .admin-list { display: flex; flex-direction: column; gap: 1rem; }
+        .admin-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1.5rem; border-radius: 12px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .admin-item strong { display: block; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .admin-item p { color: var(--text-muted); font-size: 0.95rem; }
+        .btn-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+        .btn-edit { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+        .add-btn { background: var(--primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        
+        .tab-menu { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+        .tab-btn { background: none; border: none; color: var(--text-muted); font-size: 1.1rem; cursor: pointer; padding: 0.5rem 1rem; }
+        .tab-btn.active { color: var(--primary); font-weight: 600; border-bottom: 2px solid var(--primary); }
+
+        /* 통계 대시보드 스타일 */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; text-align: center; }
+        .stat-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); display: block; }
+        .stat-label { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .chart-container { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; border-radius: 16px; margin-bottom: 3rem; position: relative; height: 350px; }
+    </style>
+</head>
+<body>
+    <div class="admin-page container">
+        <div class="admin-header">
+            <div>
+                <h1 class="hero-title" style="font-size: 2.5rem;">Admin Dashboard</h1>
+                <p style="color:var(--text-muted);">원장님 전용 통합 관리 시스템</p>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <a href="index.html" class="btn-edit" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; padding: 0.6rem 1.2rem;">
+                    🏠 홈페이지 가기
+                </a>
+                <button id="logoutBtn" class="btn-danger">로그아웃</button>
+            </div>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" id="tab-stats" onclick="switchTab('stats')">방문자 통계</button>
+            <button class="tab-btn" id="tab-reviews" onclick="switchTab('reviews')">후기 관리</button>
+            <button class="tab-btn" id="tab-schedules" onclick="switchTab('schedules')">모집 일정 관리</button>
+            <button class="tab-btn" id="tab-inquiries" onclick="switchTab('inquiries')">상담 신청 내역</button>
+        </div>
+
+        <!-- 통계 대시보드 섹션 -->
+        <div id="stats-tab" class="admin-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value" id="todayVisits">0</span>
+                    <span class="stat-label">오늘의 방문자</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="yesterdayVisits">0</span>
+                    <span class="stat-label">어제 방문자</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="totalVisits">0</span>
+                    <span class="stat-label">전체 방문자</span>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h4 style="margin-bottom: 1.5rem;">주간 방문 추이</h4>
+                <canvas id="visitorChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 후기 관리 섹션 -->
+        <div id="reviews-tab" class="admin-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem;">
+                <h3>등록된 후기 목록</h3>
+            </div>
+            <div id="adminReviewList" class="admin-list">
+                <p style="text-align:center; padding: 3rem;">불러오는 중...</p>
+            </div>
+        </div>
+
+        <!-- 일정 관리 섹션 -->
+        <div id="schedules-tab" class="admin-section" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem;">
+                <h3>모집 일정 목록</h3>
+                <button class="add-btn" onclick="openScheduleModal()">+ 새로운 일정 추가</button>
+            </div>
+            <div id="adminScheduleList" class="admin-list">
+                <p style="text-align:center; padding: 3rem;">불러오는 중...</p>
+            </div>
+        </div>
+
+        <!-- 상담 신청 내역 섹션 -->
+        <div id="inquiries-tab" class="admin-section" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem;">
+                <h3>상담 신청 내역 (최신순)</h3>
+            </div>
+            <div id="adminInquiryList" class="admin-list">
+                <p style="text-align:center; padding: 3rem;">불러오는 중...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 일정 추가/수정 모달 -->
+    <div id="scheduleModal" class="modal-overlay">
+        <div class="modal-content glass">
+            <button class="modal-close" onclick="closeScheduleModal()">&times;</button>
+            <div class="modal-header">
+                <h3>모집 일정 관리</h3>
+            </div>
+            <form id="scheduleForm" class="reservation-form" onsubmit="return false;">
+                <input type="hidden" id="editScheduleId">
+                <div class="form-group">
+                    <label>구분</label>
+                    <select id="schedCategory" style="width:100%; padding:12px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
+                        <option value="코딩 입문반" style="background:#2a2a2a; color:white;">코딩 입문반</option>
+                        <option value="코딩 기초반" style="background:#2a2a2a; color:white;">코딩 기초반</option>
+                        <option value="알고리즘 기초반" style="background:#2a2a2a; color:white;">알고리즘 기초반</option>
+                        <option value="알고리즘 심화반" style="background:#2a2a2a; color:white;">알고리즘 심화반</option>
+                        <option value="입시·탐구반" style="background:#2a2a2a; color:white;">입시·탐구반</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>대상 학년</label>
+                    <input type="text" id="schedGrade" required placeholder="예: 초등 1~2학년">
+                </div>
+                <div class="form-group">
+                    <label>교육 과정</label>
+                    <input type="text" id="schedCourse" required placeholder="예: 블록 코딩">
+                </div>
+                <div class="form-group">
+                    <label>시간표</label>
+                    <input type="text" id="schedTime" required placeholder="예: 화/목 15:00 - 16:30">
+                </div>
+                <div class="form-group">
+                    <label>상태</label>
+                    <select id="schedStatus" style="width:100%; padding:12px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
+                        <option value="모집 중" style="background:#2a2a2a; color:white;">모집 중</option>
+                        <option value="마감 임박" style="background:#2a2a2a; color:white;">마감 임박</option>
+                        <option value="모집 완료" style="background:#2a2a2a; color:white;">모집 완료</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>표시 순서 (숫자가 낮을수록 위로)</label>
+                    <input type="number" id="schedOrder" value="0">
+                </div>
+                <button type="submit" class="add-btn" style="width: 100%;">저장하기</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="firebase.js"></script>
+    <script>
+        function switchTab(tab) {
+            document.getElementById('stats-tab').style.display = tab === 'stats' ? 'block' : 'none';
+            document.getElementById('reviews-tab').style.display = tab === 'reviews' ? 'block' : 'none';
+            document.getElementById('schedules-tab').style.display = tab === 'schedules' ? 'block' : 'none';
+            document.getElementById('inquiries-tab').style.display = tab === 'inquiries' ? 'block' : 'none';
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+        
+        function openScheduleModal() {
+            document.getElementById('editScheduleId').value = '';
+            document.getElementById('scheduleForm').reset();
+            document.getElementById('scheduleModal').classList.add('active');
+        }
+        
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

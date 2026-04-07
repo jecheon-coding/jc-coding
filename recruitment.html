@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제천코딩학원 모집 공고 | Coding & Play</title>
+    <meta name="keywords" content="제천코딩학원, 제천코딩, 제천학원, 제천 파이썬, 학원 모집안내, 초등코딩, 중등코딩">
+    <meta name="description" content="제천코딩학원 Coding & Play 2026학년도 신입 원생 모집! 초·중등 코딩 교육 전문 과정의 아주 상세한 일정과 시간표를 여기서 확인하세요.">
+
+    <!-- 검색엔진 및 소셜 공유(Open Graph) 속성 -->
+    <meta name="naver-site-verification" content="174b781a591204fff7f13d6154f23b28589a8be7" />
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="제천코딩학원 모집 공고 | Coding & Play">
+    <meta property="og:description" content="제천코딩학원 2026학년도 신입 원생 모집 안내. 초·중등 코딩 교육 전문 과정의 상세 일정과 시간표를 확인하세요.">
+    <meta property="og:image" content="https://jc-coding.vercel.app/images/recruitment_main.png">
+    <meta property="og:url" content="https://jc-coding.vercel.app/recruitment.html">
+    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- 배경 네온 글로우 오브젝트 -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <!-- 헤더 / 내비게이션 -->
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <span class="logo-dot"></span>
+            Coding&Play
+        </a>
+        <ul class="nav-links">
+            <!-- 모바일 전용 헤더 -->
+            <div class="mobile-menu-header">
+                <div class="menu-header-text">
+                    <h2>제천코딩학원</h2>
+                    <p>파이썬 · 알고리즘 전문</p>
+                </div>
+            </div>
+            
+            <li><a href="index.html#about">학원 소개</a></li>
+            <li><a href="index.html#curriculum">커리큘럼</a></li>
+            <li><a href="recruitment.html" class="active" style="color: var(--primary);">모집 안내</a></li>
+            <li><a href="index.html#reviews">학부모 후기</a></li>
+            <li><a href="index.html#location">오시는 길</a></li>
+
+            <!-- 모바일 전용 꼬리말 (예약 팝업 띄우기) -->
+            <div class="mobile-menu-footer">
+                <a href="index.html#contact" class="btn-primary btn-reservation" style="width: 100%; justify-content: center; font-size: 1.2rem; padding: 1.2rem;">상담 신청</a>
+            </div>
+        </ul>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="#" class="nav-cta btn-reservation">상담 신청</a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 모집 공고 헤더 -->
+    <section class="section" style="padding-top: 10rem; padding-bottom: 2rem;">
+        <div class="container">
+            <div class="section-header reveal active" style="text-align: left; margin-bottom: 3rem;">
+                <span class="section-tag">2026 ADMISSION</span>
+                <h1 class="hero-title" style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem;">
+                    2026학년도 <br>
+                    <span class="text-gradient">신입 원생 모집 안내</span>
+                </h1>
+                <p style="font-size: 1.2rem; color: var(--text-muted);">
+                    미래를 준비하는 아이들을 위한 프리미엄 코딩 교육, <br>
+                    지금 바로 상담 신청을 통해 정원을 예약하세요.
+                </p>
+            </div>
+
+            <!-- 원장님이 제공해주신 이미지 기반 프리미엄 배너 -->
+            <div class="recruitment-hero glass reveal active"
+                style="margin-bottom: 1.5rem; background-image: url('images/recruitment_main.png'); background-size: cover; background-position: center;">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-text-overlay">
+                        <h3 style="text-shadow: 0 10px 30px rgba(0,0,0,0.5);">Premium Coding Class</h3>
+                        <p style="background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; color: white;">
+                            미래를 설계하는 가장 완벽한 방법</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 상세 모집 요강 -->
+    <section class="recruitment-content dark-bg">
+        <div class="container">
+            <div class="recruitment-card reveal active">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <span class="section-tag">CLASS SCHEDULE</span>
+                    <h2>학년별 모집 반 및 <span class="text-gradient">시간표</span></h2>
+                </div>
+                <div class="schedule-table-wrapper">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>대상 학년</th>
+                                <th>교육 과정</th>
+                                <th>시간표</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleContainer">
+                            <!-- Firebase에서 데이터가 동적으로 로드됩니다. -->
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding: 3rem 0; color:var(--text-muted);">일정을
+                                    불러오는 중입니다...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="registration-steps reveal">
+                <div class="section-header" style="margin-bottom: 3rem;">
+                    <span class="section-tag">ADMISSION PROCESS</span>
+                    <h2>입학 안내 및 <span class="text-gradient">등록 절차</span></h2>
+                </div>
+                <div class="step-grid">
+                    <div class="step-card glass">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h4>무료 상담 신청</h4>
+                        <p>전화 또는 온라인으로 간편 예약</p>
+                    </div>
+                    <div class="step-card glass">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <h4>맞춤 학습 진단</h4>
+                        <p>20년 경력 원장이 학생 수준 정확히 분석</p>
+                    </div>
+                    <div class="step-card glass">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h4>맞춤 반 배정</h4>
+                        <p>수준·연령에 맞는 맞춤 반 편성</p>
+                    </div>
+                    <div class="step-card glass">
+                        <div class="step-number">4</div>
+                        <div class="step-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m5 11 4-7"></path>
+                                <path d="m19 11-4-7"></path>
+                                <path d="M2 11h20"></path>
+                                <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.6-7.4"></path>
+                                <path d="m9 11 1 9"></path>
+                                <path d="m15 11-1 9"></path>
+                            </svg>
+                        </div>
+                        <h4>수업 시작 및 관리</h4>
+                        <p>등록 후 체계적인 관리와 함께<br>꾸준한 학습 성장을 지원합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-card glass reveal active" style="margin-top: 5rem; border-color: var(--primary);">
+                <h2>궁금한 점이 있으신가요?</h2>
+                <p>20년 IT 전문가가 직접 답변해 드립니다.</p>
+                <div class="contact-links">
+                    <a href="#" class="contact-btn btn-reservation" style="border:none; cursor:pointer;">상담 신청하기</a>
+                    <a href="tel:0436521998" class="contact-btn"
+                        style="background: rgba(255,255,255,0.05); color:white; border: 1px solid rgba(255,255,255,0.1);">
+                        전화 문의
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Coding & Play Academy. All rights reserved. | 📞 043-652-1998</p>
+        </div>
+    </footer>
+
+    <!-- 방문 상담 예약 모달 -->
+    <div id="reservationModal" class="modal-overlay">
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <h3>방문 상담 예약</h3>
+                <p>간단한 정보를 남겨주시면 빠르게 연락드리겠습니다.</p>
+            </div>
+            <form id="reservationForm" class="reservation-form">
+                <div class="form-group">
+                    <label for="name">학부모님 성함 <span class="required">*</span></label>
+                    <input type="text" id="name" name="성함" required placeholder="예: 홍길동">
+                </div>
+                <div class="form-group">
+                    <label for="phone">연락처 <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="연락처" required placeholder="예: 010-1234-5678">
+                </div>
+                <div class="form-group">
+                    <label for="grade">자녀 연령/학년 <span class="required">*</span></label>
+                    <input type="text" id="grade" name="학년" required placeholder="예: 초등학교 3학년">
+                </div>
+                <div class="form-group">
+                    <label for="message">문의 사항 (선택)</label>
+                    <textarea id="message" name="문의사항" rows="3"
+                        placeholder="궁금하신 점이나 현재 아이의 코딩 경험 유무를 적어주세요."></textarea>
+                </div>
+                <button type="submit" class="contact-btn submit-btn"
+                    style="width: 100%; border: none; cursor: pointer; text-align: center;">예약 신청 완료하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 스크립트 연결 -->
+    <script src="main.js?v=2"></script>
+    <script type="module" src="firebase.js"></script>
+</body>
+
+</html>

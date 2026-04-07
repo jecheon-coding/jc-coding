@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jc-coding.vercel.app/sitemap.xml
