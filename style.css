@@ -1169,7 +1169,7 @@ td {
     border-top: 1px solid rgba(255,255,255,0.08) !important;
   }
   
-  .mobile-menu-footer a {
+  .mobile-btn-center {
     background: var(--primary) !important; /* 파란색 배경으로 변경하여 잘 어울리게 함 */
     color: #ffffff !important; /* 글자색을 명확한 흰색으로 변경 */
     text-align: center !important;
@@ -1183,7 +1183,7 @@ td {
     align-items: center !important;
     width: 85% !important;
     margin: 0 auto !important;
-    padding: 1rem !important;
+    padding: 1rem 0 !important; /* 좌우 패딩을 0으로 강제하여 글씨가 정가운데 오도록 함 */
   }
   
   /* 메뉴 내 링크 디자인 */
