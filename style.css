@@ -174,7 +174,7 @@ nav.scrolled {
 }
 .nav-links a:hover::after { width: 100%; }
 
-.mobile-menu-header, .mobile-menu-footer {
+.mobile-menu-header, .mobile-menu-footer, .mobile-menu-image {
   display: none;
 }
 
@@ -1139,6 +1139,10 @@ td {
     flex-direction: column !important;
   }
 
+  .mobile-menu-image {
+    display: block !important;
+  }
+
   .mobile-menu-header {
     padding: 0 2rem 2rem 2rem !important;
     border-bottom: 1px solid rgba(255,255,255,0.08) !important;
@@ -1174,6 +1178,12 @@ td {
     font-size: 1.15rem !important;
     font-weight: 700 !important;
     border-radius: 50px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 85% !important;
+    margin: 0 auto !important;
+    padding: 1rem !important;
   }
   
   /* 메뉴 내 링크 디자인 */
