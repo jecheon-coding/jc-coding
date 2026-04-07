@@ -1154,14 +1154,20 @@ td {
   }
 
   .mobile-menu-footer {
-    padding: 2rem !important;
+    padding: 2rem 2rem 4rem 2rem !important; /* 하단 여백을 늘려 버튼을 위로 올림 */
     margin-top: auto !important; 
     border-top: 1px solid rgba(255,255,255,0.08) !important;
   }
   
   .mobile-menu-footer a {
-    color: var(--bg-base) !important;
+    background: var(--primary) !important; /* 파란색 배경으로 변경하여 잘 어울리게 함 */
+    color: #ffffff !important; /* 글자색을 명확한 흰색으로 변경 */
     text-align: center !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important; /* 버튼 섀도우 효과 */
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    border-radius: 50px !important;
   }
   
   /* 메뉴 내 링크 디자인 */
