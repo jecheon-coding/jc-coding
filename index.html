@@ -8,7 +8,7 @@
     <title>제천코딩학원 Coding & Play | 미래 지향적 코딩 학원</title>
     <meta name="keywords" content="제천코딩학원, 제천코딩, 제천학원, 제천 파이썬, 장락동 학원, 코딩학원, 초등코딩, 중등코딩">
     <meta name="description" content="제천코딩학원 Coding&Play. 20년 전문가가 지도하는 초중등 전문 코딩 학원. 진짜 실무 중심 교육을 경험하세요!">
-    
+
     <!-- 검색엔진 및 소셜 공유(Open Graph) 속성 -->
     <meta name="naver-site-verification" content="174b781a591204fff7f13d6154f23b28589a8be7" />
     <meta property="og:type" content="website">
@@ -22,44 +22,57 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YF6JYSNCPR"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-YF6JYSNCPR');
+        gtag('config', 'G-YF6JYSNCPR');
     </script>
 </head>
 
 <body>
 
+    <!-- 배경 네온 글로우 오브젝트 -->
     <div class="glow-orb orb-1"></div>
     <div class="glow-orb orb-2"></div>
     <div class="glow-orb orb-3"></div>
 
+    <!-- 헤더 / 내비게이션 -->
     <nav id="navbar">
         <a href="#" class="logo">
             <span class="logo-dot"></span>
             Coding&Play
         </a>
         <ul class="nav-links">
+            <!-- 모바일 전용 헤더 -->
             <div class="mobile-menu-header">
-                <img src="images/Logo.png" alt="제천코딩 로고" style="width: 45px; height: 45px; border-radius: 10px; object-fit: contain;">
+                <img src="images/Logo.png" alt="제천코딩 로고"
+                    style="width: 45px; height: 45px; border-radius: 10px; object-fit: contain;">
                 <div class="menu-header-text">
                     <h2 style="font-size: 1.45rem; margin-bottom: 2px;">제천코딩학원</h2>
                     <p style="font-size: 0.95rem; color: var(--primary);">파이썬 · 알고리즘 전문</p>
                 </div>
             </div>
-            
-            <li><a href="index.html#about"><i class="fa-regular fa-building" style="width: 30px; text-align: center;"></i> 학원 소개</a></li>
-            <li><a href="index.html#curriculum"><i class="fa-solid fa-list-check" style="width: 30px; text-align: center;"></i> 커리큘럼</a></li>
-            <li><a href="recruitment.html"><i class="fa-solid fa-bullhorn" style="width: 30px; text-align: center;"></i> 모집 안내</a></li>
-            <li><a href="index.html#reviews"><i class="fa-regular fa-comment-dots" style="width: 30px; text-align: center;"></i> 학부모 후기</a></li>
-            <li><a href="index.html#location"><i class="fa-solid fa-map-location-dot" style="width: 30px; text-align: center;"></i> 오시는 길</a></li>
 
-            <div class="mobile-menu-image" style="margin: 1.5rem 2rem 0 2rem; height: 160px; border-radius: 20px; overflow: hidden; opacity: 0.8; box-shadow: 0 10px 20px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
-                <img src="images/학원.jpeg" alt="학원 내부 풍경" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) blur(1.5px);">
+            <li><a href="index.html#about"><i class="fa-regular fa-building"
+                        style="width: 30px; text-align: center;"></i> 학원 소개</a></li>
+            <li><a href="index.html#curriculum"><i class="fa-solid fa-list-check"
+                        style="width: 30px; text-align: center;"></i> 커리큘럼</a></li>
+            <li><a href="recruitment.html"><i class="fa-solid fa-bullhorn" style="width: 30px; text-align: center;"></i>
+                    모집 안내</a></li>
+            <li><a href="index.html#reviews"><i class="fa-regular fa-comment-dots"
+                        style="width: 30px; text-align: center;"></i> 학부모 후기</a></li>
+            <li><a href="index.html#location"><i class="fa-solid fa-map-location-dot"
+                        style="width: 30px; text-align: center;"></i> 오시는 길</a></li>
+
+            <!-- 학원 전경 (가운데 흐린 이미지) -->
+            <div class="mobile-menu-image"
+                style="margin: 1.5rem 2rem 0 2rem; height: 160px; border-radius: 20px; overflow: hidden; opacity: 0.8; box-shadow: 0 10px 20px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
+                <img src="images/학원.jpeg" alt="학원 내부 풍경"
+                    style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) blur(1.5px);">
             </div>
 
+            <!-- 모바일 전용 꼬리말 (예약 팝업 띄우기) -->
             <div class="mobile-menu-footer">
                 <a href="#" class="btn-primary btn-reservation mobile-btn-center">무료 상담 신청하기</a>
             </div>
@@ -72,6 +85,7 @@
         </div>
     </nav>
 
+    <!-- 히어로 섹션 -->
     <section class="hero" id="home">
         <div class="container hero-flex">
             <div class="hero-text reveal">
@@ -107,6 +121,7 @@
         </div>
     </section>
 
+    <!-- 무엇이 다른가요 (Features) 섹션 -->
     <section class="section dark-bg" id="about">
         <div class="container">
             <div class="section-header reveal">
@@ -158,6 +173,7 @@
         </div>
     </section>
 
+    <!-- 커리큘럼 타임라인 섹션 -->
     <section class="section" id="curriculum">
         <div class="container">
             <div class="section-header reveal">
@@ -190,7 +206,7 @@
                     <div class="timeline-content glass">
                         <span class="timeline-step">STEP 03</span>
                         <h3>문제 해결 중심 알고리즘 기초</h3>
-                        <p>컴퓨팅 실력을 실전으로 끌어올리는 단계입니다. 다양한 알고리즘을 분석하고 직접 코드로 구현합니다.</p>
+                        <p>다양한 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고<br>스스로 풀어내는 힘을 기릅니다.</p>
                     </div>
                 </div>
 
@@ -198,124 +214,254 @@
                     <div class="timeline-icon">04</div>
                     <div class="timeline-content glass">
                         <span class="timeline-step">STEP 04</span>
-                        <h3>정보올림피아드 및 수행평가 대비</h3>
-                        <p>대회 및 학교 수행평가를 완벽하게 준비하는 최고급 과정입니다. 주제 선정부터 최종 결과물까지 밀착 지도합니다.</p>
+                        <h3>실전 프로젝트 & 입시·수행 완벽 대비</h3>
+                        <p>AI 활용 프로젝트는 물론, 고등학생을 위한 수행평가 및 탐구 보고서 작성을 지원하여 생활기록부를 실질적인 실적으로 채워줍니다.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- 실제 수업 모습 갤러리 섹션 (개인정보 보호를 위해 임시 숨김 처리)
+    <section class="section" id="gallery" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">ACTUAL CLASS</span>
+                <h2>실제 <span class="text-gradient">수업 모습</span></h2>
+                <p>초등 블록코딩부터 파이썬·알고리즘까지<br>학생 수준에 맞춰 지도합니다.</p>
+            </div>
+
+            <div class="gallery-grid reveal">
+                <div class="gallery-grid-item large">
+                    <img src="images/class-main.png" alt="컴퓨터 수업 모습">
+                </div>
+                <div class="gallery-grid-item">
+                    <img src="images/class-1.png" alt="블록코딩 학습">
+                </div>
+                <div class="gallery-grid-item">
+                    <img src="images/class-2.png" alt="코딩 실전 실습">
+                </div>
+            </div>
+        </div>
+    <!-- 후기 섹션 -->
     <section class="section dark-bg" id="reviews">
         <div class="container">
             <div class="section-header reveal">
-                <span class="section-tag">REVIEWS</span>
-                <h2>학부모님들의 <span class="text-gradient">리얼 후기</span></h2>
+                <span class="section-tag">학부모 후기</span>
+                <h2>학부모님들의 생생한 후기</h2>
                 <p>가장 가까이에서 지켜본 솔직한 후기를 만나보세요.</p>
-                <button class="nav-cta" style="margin-top: 2rem; border-color: rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('reviewModal').classList.add('active'); document.body.style.overflow='hidden'">🖋️ 학부모 후기 남기기</button>
+                <div style="margin-top: 25px;">
+                    <button class="btn-secondary" id="openReviewBtn"
+                        style="cursor: pointer; padding: 0.8rem 1.8rem; background: var(--glass-bg);">✏️ 학부모 후기
+                        남기기</button>
+                </div>
             </div>
 
-            <div class="reviews-grid" id="reviewContainer">
-                <!-- 후기가 동적으로 추가됨 -->
+            <div class="review-grid" id="reviewContainer">
+                <p style="text-align:center; width:100%; color:var(--text-muted); font-style:italic; padding: 3rem 0;">
+                    데이터베이스에서 후기를 불러오는 중입니다...</p>
             </div>
         </div>
     </section>
 
-    <section class="section" id="location">
-        <div class="container">
-            <div class="section-header reveal">
+    <!-- 오시는 길 (Location) 섹션 -->
+    <section class="section dark-bg" id="location">
+        <div class="container location-content reveal">
+            <div class="reveal">
                 <span class="section-tag">LOCATION</span>
-                <h2><span class="text-gradient">오시는 길</span></h2>
-                <p>제천 장락동 코아루 아파트 정문 맞은편 2층에 위치하고 있습니다.</p>
+                <h2 style="text-align: left; margin-bottom: 1rem;">학원 <span class="text-gradient">오시는 길</span></h2>
+                <p
+                    style="text-align: left; margin-bottom: 0.5rem; color: var(--text-main); font-size: 1.25rem; font-weight: 600; letter-spacing: -0.3px;">
+                    충북 제천시 죽하로 15길 34 2층 (장락동)
+                </p>
+                <div class="landmark-text">
+                    📍 장락롯데캐슬 정문 앞 맞은편
+                </div>
+                <p style="text-align: left; margin-top: 1.5rem; color: #a1a1aa; font-size: 1.05rem; line-height: 1.8;">
+                    장락롯데캐슬과 오네트 아파트 사이, 정문 맞은편 상가 2층입니다.<br>
+                    자차 이용 시 건물 주변에 편하게 주차하실 수 있습니다.
+                </p>
             </div>
-            
-            <div class="map-container glass reveal">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3184.8117769911835!2d128.2234567!3d37.1511234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35638cad6996d9bf%3A0xc33e1a06734c54a9!2z7KCc7LKc7L2U65Sp7ZWZ7JuQ!5e0!3m2!1sko!2skr!4v1711234567890!5m2!1sko!2skr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-    </section>
 
-    <section class="section dark-bg" id="contact">
-        <div class="container">
-            <div class="cta-card glass reveal">
-                <div class="section-tag">CONTACT US</div>
-                <h2>우리아이 코딩 교육,<br><span class="text-gradient">지금 전문적으로</span> 경험해 보세요</h2>
-                <p>20년 경력의 전문가와<br>아이에게 맞는 학습 방향을 상담해 드립니다.</p>
-                <div class="contact-links">
-                    <a href="tel:043-652-1998" class="contact-btn" style="background: rgba(255,255,255,0.05); color:white; border: 1px solid rgba(255,255,255,0.1); display: inline-flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-phone-alt"></i> 무료 상담 신청
+            <div class="contact-card glass reveal"
+                style="padding: 2.5rem; display: flex; flex-direction: column; gap: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <!-- 실제 학원 사진 -->
+                    <div class="map-box" style="height: 220px;">
+                        <img src="images/학원.jpeg" alt="학원 내부 전경" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <!-- 지도 안내 박스 -->
+                    <div class="map-box" style="height: 220px;">
+                        <div class="map-glow"></div>
+                        <i class="fas fa-map-marked-alt"
+                            style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; z-index: 1;"></i>
+                        <p
+                            style="color: var(--text-muted); z-index: 1; font-size: 0.85rem; text-align: center; padding: 0 10px;">
+                            네이버/카카오 지도로<br>정확한 위치 확인</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                    <a href="https://map.naver.com/v5/search/%EC%A0%9C%EC%B2%9C%20%EC%BD%94%EB%94%A9%EC%95%A4%ED%94%8C%EB%A0%88%EC%9D%B4%ED%95%99%EC%9B%90"
+                        target="_blank" class="contact-btn"
+                        style="background: #03c75a; border: none; flex: 1; min-width: 150px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fas fa-map-marker-alt"></i> 네이버 지도
+                    </a>
+                    <a href="https://map.kakao.com/link/search/%EC%BD%94%EB%94%A9%EC%95%A4%ED%94%8C%EB%A0%88%EC%9D%B4%20%EC%B6%A9%EB%B6%81%EC%A7%80%EC%82%AC%20%EC%A0%9C%EC%B2%9C%EC%84%BC%ED%84%B0"
+                        target="_blank" class="contact-btn"
+                        style="background: #fee500; color: #3c1e1e; border: none; flex: 1; min-width: 150px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fas fa-comment"></i> 카카오맵
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 모달: 후기 작성 -->
-    <div class="modal" id="reviewModal">
-        <div class="modal-content glass">
-            <h2>후기 남기기</h2>
-            <form id="reviewForm">
-                <div class="input-group">
-                    <label>성함</label>
-                    <input type="text" id="reviewName" required placeholder="예: 초1맘">
-                </div>
-                <div class="input-group">
-                    <label>학년</label>
-                    <input type="text" id="reviewGrade" required placeholder="예: 초등 1학년">
-                </div>
-                <div class="input-group">
-                    <label>후기 내용</label>
-                    <textarea id="reviewContent" required placeholder="학부모님의 소중한 의견을 들려주세요."></textarea>
-                </div>
-                <div class="input-group">
-                    <label>비밀번호 (수정/삭제용)</label>
-                    <input type="password" id="reviewPassword" required placeholder="숫자 4자리 권장">
-                </div>
-                <div class="modal-btns">
-                    <button type="button" class="btn-secondary" onclick="document.getElementById('reviewModal').classList.remove('active'); document.body.style.overflow=''">취소</button>
-                    <button type="submit" class="btn-primary">등록하기</button>
-                </div>
-            </form>
+    <!-- CTA 섹션 -->
+    <section class="section" id="contact">
+        <div class="contact-card glass reveal">
+            <div class="section-tag">CONTACT US</div>
+            <h2>우리 아이도 코딩을 <span class="text-gradient">'할 수 있게'</span> 됩니다</h2>
+            <p>20년 경력의 전문가와<br>아이에게 맞는 학습 방향을 상담해 드립니다.</p>
+            <div class="contact-links">
+                <a href="tel:043-652-1998" class="contact-btn"
+                    style="background: rgba(255,255,255,0.05); color:white; border: 1px solid rgba(255,255,255,0.1); display: inline-flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-phone-alt"></i> 무료 상담 신청
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- 모달: 상담 신청 -->
-    <div class="modal" id="reservationModal">
-        <div class="modal-content glass">
-            <h2>무료 상담 신청</h2>
-            <form id="reservationForm">
-                <div class="input-group">
-                    <label>성함</label>
-                    <input type="text" id="name" name="name" required placeholder="학부모님 또는 학생 성함">
-                </div>
-                <div class="input-group">
-                    <label>연락처</label>
-                    <input type="tel" id="email" name="phone" required placeholder="번호만 입력해주세요">
-                </div>
-                <input type="hidden" id="phone" name="phone_hidden"> <!-- Backwards compatibility -->
-                <div class="input-group">
-                    <label>학년</label>
-                    <input type="text" id="grade" name="grade" placeholder="예: 초등 5학년">
-                </div>
-                <div class="input-group">
-                    <label>하고 싶은 말</label>
-                    <textarea id="message" name="message" placeholder="궁금하신 점을 남겨주세요"></textarea>
-                </div>
-                <div class="modal-btns">
-                    <button type="button" class="btn-secondary" id="closeModal">취소</button>
-                    <button type="submit" class="btn-primary">신청하기</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+    <!-- 푸터 -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 제천코딩학원 Coding & Play. All rights reserved.</p>
+            <p style="margin-bottom: 10px;">충북 제천시 죽하로 15길 34 2층 (장락동) | 📞 043-652-1998</p>
+            <p>&copy; 2026 Coding & Play Academy. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="main.js"></script>
+    <!-- 예약 모달 팝업 -->
+    <div id="reservationModal" class="modal-overlay">
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <h3>방문 상담 예약</h3>
+                <p>간단한 정보를 남겨주시면 빠르게 연락드리겠습니다.</p>
+            </div>
+            <form id="reservationForm" class="reservation-form">
+                <div class="form-group">
+                    <label for="name">학부모님 성함 <span class="required">*</span></label>
+                    <input type="text" id="name" name="학부모_성함" placeholder="예: 홍길동" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">연락처 <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="연락처" placeholder="예: 010-1234-5678" required>
+                </div>
+                <div class="form-group">
+                    <label for="grade">자녀 연령/학년 <span class="required">*</span></label>
+                    <input type="text" id="grade" name="자녀_학년" placeholder="예: 초등학교 5학년" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">문의 사항 (선택)</label>
+                    <textarea id="message" name="문의사항" rows="3"
+                        placeholder="궁금하신 점이나 현재 아이의 코딩 경험 유무를 적어주세요."></textarea>
+                </div>
+                <button type="submit" class="contact-btn submit-btn"
+                    style="width: 100%; border: none; cursor: pointer; text-align: center;">예약 신청 완료하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 후기 작성 모달 팝업 -->
+    <div id="reviewModal" class="modal-overlay">
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeReviewBtn">&times;</button>
+            <div class="modal-header">
+                <h3>✏️ 후기 작성</h3>
+                <p>소중한 피드백을 남겨주시면 큰 힘이 됩니다!</p>
+            </div>
+            <form id="reviewForm" class="reservation-form">
+                <div class="form-group">
+                    <label for="reviewName">학부모님 성함 <span class="required">*</span></label>
+                    <input type="text" id="reviewName" required placeholder="예: 홍길동 (또는 익명)">
+                </div>
+                <div class="form-group">
+                    <label for="reviewGrade">자녀 연령/학년</label>
+                    <input type="text" id="reviewGrade" placeholder="예: 초등학교 5학년">
+                </div>
+                <div class="form-group">
+                    <label for="reviewPassword">비밀번호 (수정/삭제용) <span class="required">*</span></label>
+                    <input type="password" id="reviewPassword" required placeholder="숫자 4자리 등 자유롭게 입력"
+                        autocomplete="new-password">
+                </div>
+                <div class="form-group">
+                    <label for="reviewContent">후기 내용 <span class="required">*</span></label>
+                    <textarea id="reviewContent" rows="4" required
+                        placeholder="학원 수업을 들으며 좋았던 점이나 솔직한 후기를 남겨주세요!"></textarea>
+                </div>
+                <button type="submit" class="contact-btn submit-btn"
+                    style="width: 100%; border: none; cursor: pointer; text-align: center;">후기 등록하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 후기 제어(수정/삭제) 비밀번호 확인 모달 (학부모용) -->
+    <div id="passwordModal" class="modal-overlay">
+        <div class="modal-content glass" style="max-width: 400px;">
+            <button class="modal-close" id="closePasswordBtn">&times;</button>
+            <div class="modal-header">
+                <h3>🔒 비밀번호 확인</h3>
+                <p>글 작성 시 설정하신 비밀번호를 입력해 주세요.</p>
+            </div>
+            <form id="passwordForm" class="reservation-form" onsubmit="return false;">
+                <input type="hidden" id="targetReviewId">
+                <input type="hidden" id="targetReviewPassword">
+                <div class="form-group">
+                    <input type="password" id="checkPassword" required placeholder="비밀번호 입력" style="text-align:center;">
+                    <p id="passwordError"
+                        style="color:#ef4444; font-size:0.9rem; text-align:center; display:none; margin-top:5px;">비밀번호가
+                        일치하지 않습니다.</p>
+                </div>
+                <div style="display:flex; gap: 10px;">
+                    <button type="button" class="btn-secondary" id="actionEditBtn" style="flex:1;">수정</button>
+                    <button type="button" class="btn-secondary" id="actionDeleteBtn"
+                        style="flex:1; border-color:#ef4444; color:#ef4444; background:rgba(239, 68, 68, 0.1);">삭제</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 후기 수정 모달 (학부모용) -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content glass">
+            <button class="modal-close" id="closeEditBtn">&times;</button>
+            <div class="modal-header">
+                <h3>📝 후기 수정</h3>
+            </div>
+            <form id="editForm" class="reservation-form">
+                <input type="hidden" id="editReviewId">
+                <div class="form-group">
+                    <label>성함 <span class="required">*</span></label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label>학년/자녀 연령 <span class="required">*</span></label>
+                    <input type="text" id="editGrade" required>
+                </div>
+                <div class="form-group">
+                    <label>후기 내용 <span class="required">*</span></label>
+                    <textarea id="editContent" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="contact-btn submit-btn"
+                    style="width: 100%; border:none; cursor:pointer;">최종 수정 완료</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- 인터랙션 로직 스크립트 -->
+    <script src="main.js?v=2"></script>
     <script type="module" src="firebase.js"></script>
 </body>
 

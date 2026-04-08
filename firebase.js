@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     createdAt: serverTimestamp()
                 };
                 await addDoc(collection(db, "reservations"), data);
-                // Notification via Formspree
+                // Email notification (Formspree)
                 const formData = new FormData(resForm);
                 fetch("https://formspree.io/f/xeeppoza", { method: "POST", body: formData, headers: {'Accept': 'application/json'} });
-                alert('상담 신청 완료!');
+                alert('상담 신청이 완료되었습니다.');
                 resForm.reset();
-                if(document.getElementById('reservationModal')) document.getElementById('reservationModal').classList.remove('active');
+                if(window.closeModal) window.closeModal('reservationModal');
             } catch (err) { alert('오류 발생'); }
         });
     }
@@ -76,10 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     createdAt: serverTimestamp()
                 };
                 await addDoc(collection(db, "reviews"), data);
-                alert('후기가 등록되었습니다.');
+                alert('소중한 후기가 등록되었습니다.');
                 reviewForm.reset();
-                if(document.getElementById('reviewModal')) document.getElementById('reviewModal').classList.remove('active');
-                document.body.style.overflow = '';
+                if(window.closeModal) window.closeModal('reviewModal');
                 loadReviews();
             } catch (err) { alert('오류 발생'); }
         });
@@ -118,7 +117,6 @@ async function loadAdminStats() {
         if (document.getElementById('todayVisits')) document.getElementById('todayVisits').innerText = todaySnap.exists() ? todaySnap.data().count.toLocaleString() : '0';
         if (document.getElementById('yesterdayVisits')) document.getElementById('yesterdayVisits').innerText = yesterdaySnap.exists() ? yesterdaySnap.data().count.toLocaleString() : '0';
         
-        // Chart Load
         const q = query(collection(db, "daily_visits"), orderBy("__name__", "desc"), limit(7));
         const snap = await getDocs(q);
         const dataMap = {};
@@ -145,7 +143,7 @@ function renderChart(labels, counts) {
                 label: '일일 방문자', data: counts, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true
             }]
         },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.02)' } } } }
+        options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
@@ -155,11 +153,11 @@ async function loadAdminReviews() {
     const snap = await getDocs(query(collection(db, "reviews"), orderBy("createdAt", "desc")));
     list.innerHTML = '';
     snap.forEach(d => {
-        const data = d.data();
+        const d_data = d.data();
         const id = d.id;
         const div = document.createElement('div');
         div.className = 'admin-item';
-        div.innerHTML = `<div><strong>${escapeHTML(data.name)}</strong><p>${escapeHTML(data.content)}</p></div><button class="delete-btn" onclick="adminDeleteItem('reviews', '${id}')">삭제</button>`;
+        div.innerHTML = `<div><strong>${escapeHTML(d_data.name)}</strong><p>${escapeHTML(d_data.content)}</p></div><button class="delete-btn" onclick="adminDeleteItem('reviews', '${id}')">삭제</button>`;
         list.appendChild(div);
     });
 }
@@ -170,9 +168,9 @@ async function loadAdminInquiries() {
     const snap = await getDocs(query(collection(db, "reservations"), orderBy("createdAt", "desc")));
     table.innerHTML = '';
     snap.forEach(d => {
-        const data = d.data();
-        const date = data.createdAt ? data.createdAt.toDate().toLocaleString() : '-';
-        table.innerHTML += `<tr style="border-bottom:1px solid rgba(255,255,255,0.03);"><td style="padding:20px;">${date}</td><td style="padding:20px;"><strong>${escapeHTML(data.name)}</strong></td><td style="padding:20px;">${escapeHTML(data.phone)}</td><td style="padding:20px;">${escapeHTML(data.grade)}</td><td style="padding:20px; max-width:300px;">${escapeHTML(data.message)}</td></tr>`;
+        const d_data = d.data();
+        const date = d_data.createdAt ? d_data.createdAt.toDate().toLocaleString() : '-';
+        table.innerHTML += `<tr style="border-bottom:1px solid rgba(255,255,255,0.03);"><td style="padding:20px;">${date}</td><td style="padding:20px;"><strong>${escapeHTML(d_data.name)}</strong></td><td style="padding:20px;">${escapeHTML(d_data.phone)}</td><td style="padding:20px;">${escapeHTML(d_data.grade)}</td><td style="padding:20px; max-width:300px;">${escapeHTML(d_data.message)}</td></tr>`;
     });
 }
 
@@ -182,17 +180,17 @@ async function loadAdminSchedules() {
     const snap = await getDocs(query(collection(db, "schedules"), orderBy("order", "asc")));
     list.innerHTML = '';
     snap.forEach(d => {
-        const data = d.data();
+        const d_data = d.data();
         const div = document.createElement('div');
         div.className = 'admin-item';
-        div.innerHTML = `<div><strong>${escapeHTML(data.course)}</strong><p style="color:#777;">${escapeHTML(data.category)}</p></div><div class="btn-group"><button class="edit-btn">수정</button><button class="delete-btn" onclick="adminDeleteItem('schedules', '${d.id}')">삭제</button></div>`;
+        div.innerHTML = `<div><strong>${escapeHTML(d_data.course)}</strong><p style="color:#777;">${escapeHTML(d_data.category)}</p></div><div class="btn-group"><button class="edit-btn">수정</button><button class="delete-btn" onclick="adminDeleteItem('schedules', '${d.id}')">삭제</button></div>`;
         list.appendChild(div);
     });
 }
 
 window.adminDeleteItem = async (col, id) => { if(confirm('정말 삭제하시겠습니까?')) { await deleteDoc(doc(db, col, id)); loadAdminData(); } };
 
-// --- 4. Public Site Support ---
+// --- 4. Public Review Interactions (Matching PREVIOUS VERSION Design) ---
 async function loadReviews() {
     const container = document.getElementById('reviewContainer');
     if (!container) return;
@@ -206,17 +204,17 @@ async function loadReviews() {
             card.className = 'review-card glass reveal active';
             card.innerHTML = `
                 <div class="review-quote">"</div>
-                <div class="review-menu-btn" onclick="toggleReviewMenu('${id}')">⋮</div>
+                <div class="review-menu-btn" onclick="toggleReviewMenu('${id}')" style="top:2rem; right:1.5rem; opacity:0.3;">⋮</div>
                 <div id="menu-${id}" class="review-dropdown">
                     <button onclick="handleReviewAction('${id}', 'edit')">수정</button>
                     <button onclick="handleReviewAction('${id}', 'delete')">삭제</button>
                 </div>
-                <p style="white-space:pre-wrap;">${escapeHTML(data.content)}</p>
+                <p style="white-space:pre-wrap; margin-bottom:1.5rem; font-size:1.05rem; line-height:1.6; color:#efefef;">${escapeHTML(data.content)}</p>
                 <div class="reviewer">
-                    <div class="reviewer-avatar">${(data.name||"익")[0]}</div>
-                    <div class="reviewer-info">
-                        <h4>${maskName(data.name || "익명")}</h4>
-                        <span>${escapeHTML(data.grade || "")}</span>
+                    <div class="reviewer-avatar" style="width:50px; height:50px; background:var(--primary);">${(data.name||"익")[0]}</div>
+                    <div class="reviewer-info" style="margin-left:15px;">
+                        <h4 style="font-size:1.15rem; color:white;">${maskName(data.name || "익명")}</h4>
+                        <span style="color:#888; font-size:0.9rem;">${escapeHTML(data.grade || "")}</span>
                     </div>
                 </div>
             `;
@@ -233,15 +231,17 @@ window.toggleReviewMenu = (id) => {
 window.handleReviewAction = async (id, action) => {
     const password = prompt('후기 등록 시 입력했던 비밀번호를 입력해 주세요.');
     if (!password) return;
-    const docRef = doc(db, "reviews", id);
-    const snap = await getDoc(docRef);
-    if (snap.exists() && snap.data().password === password) {
-        if (action === 'delete') { if(confirm('정말 삭제하시겠습니까?')) { await deleteDoc(docRef); alert('삭제되었습니다.'); loadReviews(); } }
-        else if (action === 'edit') {
-            const newContent = prompt('수정할 내용을 입력하세요.', snap.data().content);
-            if (newContent) { await updateDoc(docRef, { content: newContent }); alert('수정되었습니다.'); loadReviews(); }
-        }
-    } else { alert('비밀번호가 일치하지 않습니다.'); }
+    try {
+        const docRef = doc(db, "reviews", id);
+        const snap = await getDoc(docRef);
+        if (snap.exists() && snap.data().password === password) {
+            if (action === 'delete') { if(confirm('정말 삭제하시겠습니까?')) { await deleteDoc(docRef); alert('삭제되었습니다.'); loadReviews(); } }
+            else if (action === 'edit') {
+                const newContent = prompt('수정할 내용을 입력하세요.', snap.data().content);
+                if (newContent) { await updateDoc(docRef, { content: newContent }); alert('수정되었습니다.'); loadReviews(); }
+            }
+        } else { alert('비밀번호가 일치하지 않습니다.'); }
+    } catch (e) { alert('오류 발생'); }
 };
 
 window.addEventListener('click', (e) => { if(!e.target.classList.contains('review-menu-btn')) document.querySelectorAll('.review-dropdown').forEach(m => m.classList.remove('active')); });
