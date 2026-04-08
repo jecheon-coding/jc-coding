@@ -59,19 +59,19 @@ async function loadReviews() {
         const querySnapshot = await getDocs(q);
         reviewContainer.innerHTML = ''; 
         if (querySnapshot.empty) {
-            reviewContainer.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-muted); padding: 3rem 0;">등록된 후기가 없습니다.</p>';
+            reviewContainer.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-muted); padding: 3rem 0;">?�록???�기가 ?�습?�다.</p>';
             return;
         }
         let delay = 0;
         querySnapshot.forEach((docSnap) => {
             const data = docSnap.data();
             const id = docSnap.id;
-            const originalName = data.name || "익명";
+            const originalName = data.name || "?�명";
             const card = document.createElement('div');
             card.className = 'review-card glass reveal active'; 
             card.style.transitionDelay = `${delay}s`;
             card.innerHTML = `
-                <button class="review-options" title="수정/삭제" data-id="${id}" data-pw="${data.password || ''}" data-name="${escapeHTML(originalName)}" data-grade="${escapeHTML(data.grade || '')}" data-content="${escapeHTML(data.content || '')}">
+                <button class="review-options" title="?�정/??��" data-id="${id}" data-pw="${data.password || ''}" data-name="${escapeHTML(originalName)}" data-grade="${escapeHTML(data.grade || '')}" data-content="${escapeHTML(data.content || '')}">
                     <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="review-quote">"</div>
@@ -106,8 +106,8 @@ async function loadSchedules() {
             scheduleContainer.innerHTML = `
                 <tr>
                     <td colspan="5" style="text-align:center; padding:4rem 0; color:var(--text-muted);">
-                        <strong style="color:white; font-size:1.2rem; display:block; margin-bottom:0.5rem;">현재 정규 반은 마감 상태입니다.</strong>
-                        상담 신청 시 대기 등록 후 우선 안내드립니다.
+                        <strong style="color:white; font-size:1.2rem; display:block; margin-bottom:0.5rem;">?�재 ?�규 반�? 마감 ?�태?�니??</strong>
+                        ?�담 ?�청 ???��??�록 ???�선 ?�내?�립?�다.
                     </td>
                 </tr>`;
             return;
@@ -116,8 +116,8 @@ async function loadSchedules() {
         querySnapshot.forEach((docSnap) => {
             const data = docSnap.data();
             let statusColor = '#3b82f6';
-            if (data.status === '마감 임박') statusColor = '#ef4444';
-            if (data.status === '모집 중') statusColor = '#22c55e';
+            if (data.status === '마감 ?�박') statusColor = '#ef4444';
+            if (data.status === '모집 �?) statusColor = '#22c55e';
             scheduleContainer.innerHTML += `
                 <tr>
                     <td>${escapeHTML(data.category)}</td>
@@ -137,7 +137,7 @@ if (reservationForm) {
         e.preventDefault();
         const submitBtn = reservationForm.querySelector('.submit-btn');
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = '신청 처리 중...';
+        submitBtn.textContent = '?�청 처리 �?..';
         submitBtn.disabled = true;
 
         const data = {
@@ -160,13 +160,13 @@ if (reservationForm) {
                 headers: { 'Accept': 'application/json' }
             });
 
-            alert(`${data.name} 학부모님, 상담 예약 신청이 성공적으로 전달되었습니다.\n대시보드와 이메일로도 기록되었습니다.`);
+            alert(`${data.name} ?��?모님, ?�담 ?�약 ?�청???�공?�으�??�달?�었?�니??\n?�?�보?��? ?�메?�로??기록?�었?�니??`);
             reservationForm.reset();
             const rm = document.getElementById('reservationModal');
             if(rm) rm.classList.remove('active');
             document.body.style.overflow = '';
         } catch (error) {
-            alert("처리 중 오류가 발생했습니다. 학원으로 직접 전화 문의 부탁드립니다.");
+            alert("처리 �??�류가 발생?�습?�다. ?�원?�로 직접 ?�화 문의 부?�드립니??");
         } finally {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
@@ -212,9 +212,9 @@ if (actionDeleteBtn) {
         const inputPw = checkPasswordInput.value.trim();
         const actualPw = targetReviewPassword.value;
         if (inputPw === actualPw || inputPw === MASTER_PW) {
-            if (confirm('정말로 삭제하시겠습니까?')) {
+            if (confirm('?�말�???��?�시겠습?�까?')) {
                 await deleteDoc(doc(db, "reviews", targetReviewId.value));
-                alert('삭제되었습니다.');
+                alert('??��?�었?�니??');
                 closeAll();
                 loadReviews();
                 if (adminReviewList) loadAdminReviews();
@@ -232,11 +232,11 @@ if (editForm) {
                 grade: editGrade.value,
                 content: editContent.value
             });
-            alert('수정 완료!');
+            alert('?�정 ?�료!');
             closeAll();
             loadReviews();
             if (adminReviewList) loadAdminReviews();
-        } catch (e) { alert('수정 실패'); }
+        } catch (e) { alert('?�정 ?�패'); }
     };
 }
 
@@ -260,12 +260,12 @@ if (reviewForm) {
                 content: document.getElementById('reviewContent').value,
                 createdAt: serverTimestamp()
             });
-            alert('후기 등록 완료!');
+            alert('?�기 ?�록 ?�료!');
             reviewForm.reset();
             if(reviewModal) reviewModal.classList.remove('active');
             document.body.style.overflow = '';
             loadReviews();
-        } catch (e) { alert('실패'); }
+        } catch (e) { alert('?�패'); }
     };
 }
 
@@ -276,11 +276,11 @@ if (loginForm) {
         try {
             await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
             location.href = 'admin.html';
-        } catch (e) { alert('로그인 실패'); }
+        } catch (e) { alert('로그???�패'); }
     };
 }
 if (logoutBtn) {
-    logoutBtn.onclick = async () => { if(confirm('로그아웃?')) { await signOut(auth); location.href = 'login.html'; } };
+    logoutBtn.onclick = async () => { if(confirm('로그?�웃?')) { await signOut(auth); location.href = 'login.html'; } };
 }
 
 onAuthStateChanged(auth, (user) => {
@@ -308,7 +308,7 @@ async function loadAdminReviews() {
         const id = docSnap.id;
         const div = document.createElement('div');
         div.className = 'admin-item glass';
-        div.innerHTML = `<div><strong>${escapeHTML(data.name)}</strong><p>${escapeHTML(data.content)}</p></div><button class="btn-danger" onclick="deleteItem('reviews', '${id}')">삭제</button>`;
+        div.innerHTML = `<div><strong>${escapeHTML(data.name)}</strong><p>${escapeHTML(data.content)}</p></div><button class="btn-danger" onclick="deleteItem('reviews', '${id}')">??��</button>`;
         adminReviewList.appendChild(div);
     });
 }
@@ -322,7 +322,7 @@ async function loadAdminSchedules() {
         const id = docSnap.id;
         const div = document.createElement('div');
         div.className = 'admin-item glass';
-        div.innerHTML = `<div><strong>${escapeHTML(data.category)}</strong><p>${escapeHTML(data.course)}</p></div><div style="display:flex; gap:10px;"><button class="btn-edit" onclick="editSchedule('${id}', '${escapeHTML(data.category)}', '${escapeHTML(data.grade)}', '${escapeHTML(data.course)}', '${escapeHTML(data.time)}', '${escapeHTML(data.status)}', ${data.order})">수정</button><button class="btn-danger" onclick="deleteItem('schedules', '${id}')">삭제</button></div>`;
+        div.innerHTML = `<div><strong>${escapeHTML(data.category)}</strong><p>${escapeHTML(data.course)}</p></div><div style="display:flex; gap:10px;"><button class="btn-edit" onclick="editSchedule('${id}', '${escapeHTML(data.category)}', '${escapeHTML(data.grade)}', '${escapeHTML(data.course)}', '${escapeHTML(data.time)}', '${escapeHTML(data.status)}', ${data.order})">?�정</button><button class="btn-danger" onclick="deleteItem('schedules', '${id}')">??��</button></div>`;
         adminScheduleList.appendChild(div);
     });
 }
@@ -334,29 +334,29 @@ async function loadAdminInquiries() {
     const querySnapshot = await getDocs(q);
     adminInquiryList.innerHTML = '';
     if (querySnapshot.empty) {
-        adminInquiryList.innerHTML = '<p style="text-align:center; padding: 2rem;">최근 접수된 상담 내역이 없습니다.</p>';
+        adminInquiryList.innerHTML = '<p style="text-align:center; padding: 2rem;">최근 ?�수???�담 ?�역???�습?�다.</p>';
         return;
     }
     querySnapshot.forEach(docSnap => {
         const data = docSnap.data();
         const id = docSnap.id;
-        const date = data.createdAt ? data.createdAt.toDate().toLocaleString() : "시간 정보 없음";
+        const date = data.createdAt ? data.createdAt.toDate().toLocaleString() : "?�간 ?�보 ?�음";
         const div = document.createElement('div');
         div.className = 'admin-item glass';
         div.innerHTML = `
             <div>
-                <strong>${escapeHTML(data.name)} 학부모님 (${escapeHTML(data.grade)})</strong>
-                <p style="color:var(--primary); font-weight:600; margin: 5px 0;">📞 ${escapeHTML(data.phone)}</p>
-                <p>${escapeHTML(data.message || "의견 없음")}</p>
+                <strong>${escapeHTML(data.name)} ?��?모님 (${escapeHTML(data.grade)})</strong>
+                <p style="color:var(--primary); font-weight:600; margin: 5px 0;">?�� ${escapeHTML(data.phone)}</p>
+                <p>${escapeHTML(data.message || "?�견 ?�음")}</p>
                 <small style="color:var(--text-muted);">${date}</small>
             </div>
-            <button class="btn-danger" onclick="deleteItem('reservations', '${id}')">삭제</button>
+            <button class="btn-danger" onclick="deleteItem('reservations', '${id}')">??��</button>
         `;
         adminInquiryList.appendChild(div);
     });
 }
 
-window.deleteItem = async (col, id) => { if (confirm('정말로 해당 내역을 삭제하시겠습니까?')) { await deleteDoc(doc(db, col, id)); loadAdminData(); } };
+window.deleteItem = async (col, id) => { if (confirm('?�말�??�당 ?�역????��?�시겠습?�까?')) { await deleteDoc(doc(db, col, id)); loadAdminData(); } };
 window.editSchedule = (id, cat, grade, course, time, status, order) => {
     document.getElementById('editScheduleId').value = id;
     document.getElementById('schedCategory').value = cat;
@@ -385,7 +385,7 @@ if (scheduleForm) {
             else await updateDoc(doc(db, "schedules", id), data);
             document.getElementById('scheduleModal').classList.remove('active');
             loadAdminSchedules();
-        } catch (e) { alert('실패'); }
+        } catch (e) { alert('?�패'); }
     };
 }
 
@@ -399,7 +399,7 @@ function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag]));
 }
 
-// --- 방문자 통계 관리 (Admin Stats) ---
+// --- 방문???�계 관�?(Admin Stats) ---
 let visitorChart = null;
 
 async function loadStats() {
@@ -409,8 +409,7 @@ async function loadStats() {
     const yesterdayStr = yesterday.toISOString().split('T')[0];
 
     try {
-        // 1. 전체 방문자 및 오늘/어제 요약 정보 가져오기
-        const totalSnap = await getDoc(doc(db, "stats", "visitor_info"));
+        // 1. ?�체 방문??�??�늘/?�제 ?�약 ?�보 가?�오�?        const totalSnap = await getDoc(doc(db, "stats", "visitor_info"));
         const todaySnap = await getDoc(doc(db, "daily_visits", todayStr));
         const yesterdaySnap = await getDoc(doc(db, "daily_visits", yesterdayStr));
 
@@ -420,14 +419,14 @@ async function loadStats() {
             document.getElementById('yesterdayVisits').innerText = yesterdaySnap.exists() ? yesterdaySnap.data().count.toLocaleString() : '0';
         }
 
-        // 2. 주간 방문 추이 데이터 가져오기 (최신 7일)
+        // 2. 주간 방문 추이 ?�이??가?�오�?(최신 7??
         const q = query(collection(db, "daily_visits"), orderBy("__name__", "desc"));
         const querySnapshot = await getDocs(q);
         
         const labels = [];
         const counts = [];
         
-        // 데이터가 부족할 경우를 대비해 최근 7일을 기본으로 생성
+        // ?�이?��? 부족할 경우�??�비해 최근 7?�을 기본?�로 ?�성
         const last7Days = [];
         for(let i=6; i>=0; i--) {
             const d = new Date();
@@ -441,12 +440,11 @@ async function loadStats() {
         });
 
         last7Days.forEach(date => {
-            labels.push(date.slice(5)); // MM-DD 형식으로 표시
+            labels.push(date.slice(5)); // MM-DD ?�식?�로 ?�시
             counts.push(dataMap[date] || 0);
         });
 
-        // 3. Chart.js 렌더링
-        renderVisitorChart(labels, counts);
+        // 3. Chart.js ?�더�?        renderVisitorChart(labels, counts);
     } catch (e) {
         console.error("Error loading stats:", e);
     }
@@ -465,7 +463,7 @@ function renderVisitorChart(labels, counts) {
         data: {
             labels: labels,
             datasets: [{
-                label: '일별 방문자 수',
+                label: '?�별 방문????,
                 data: counts,
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -493,10 +491,10 @@ function renderVisitorChart(labels, counts) {
 // Public Initial Load
 loadReviews();
 loadSchedules();
-loadStats(); // 통계 초기 로드 추가
-// --- 방문자 통계 트래킹 (Track Visitor) ---
+loadStats(); // ?�계 초기 로드 추�?
+// --- 방문???�계 ?�래??(Track Visitor) ---
 async function trackVisit() {
-    // 세션당 한 번만 카운트 (새로고침 중복 방지)
+    // ?�션????번만 카운??(?�로고침 중복 방�?)
     if (sessionStorage.getItem('visited')) return;
 
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
@@ -504,7 +502,7 @@ async function trackVisit() {
     const totalRef = doc(db, "stats", "visitor_info");
 
     try {
-        // 1. 일별 방문자 카운트 증가
+        // 1. ?�별 방문??카운??증�?
         const dailySnap = await getDoc(dailyRef);
         if (dailySnap.exists()) {
             await updateDoc(dailyRef, { count: increment(1) });
@@ -512,7 +510,7 @@ async function trackVisit() {
             await setDoc(dailyRef, { count: 1 });
         }
 
-        // 2. 전체 누적 방문자 카운트 증가
+        // 2. ?�체 ?�적 방문??카운??증�?
         const totalSnap = await getDoc(totalRef);
         if (totalSnap.exists()) {
             await updateDoc(totalRef, { total: increment(1) });
@@ -527,5 +525,5 @@ async function trackVisit() {
     }
 }
 
-// 스크립트 실행 시 자동 트래킹 시작
+// ?�크립트 ?�행 ???�동 ?�래???�작
 trackVisit();

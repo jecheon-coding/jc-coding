@@ -1,47 +1,152 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 로그인 | Coding & Play</title>
-    <link rel="stylesheet" href="style.css">
+    <title>관리자 로그??| Coding & Play</title>
+    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        :root {
+            --login-accent: #3b82f6;
+            --login-accent-glow: rgba(59, 130, 246, 0.5);
+        }
         .login-section {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--bg-dark);
+            background: #050505;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Pretendard', sans-serif;
         }
+        /* 배경 ?�니메이???�브?�트 */
+        .login-bg-orb {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--login-accent-glow) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: 1;
+            animation: move 20s infinite alternate;
+        }
+        @keyframes move {
+            from { transform: translate(-20%, -20%); }
+            to { transform: translate(20%, 20%); }
+        }
+        
         .login-box {
             width: 100%;
-            max-width: 400px;
-            padding: 3rem;
+            max-width: 420px;
+            padding: 3.5rem;
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .login-logo h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #fff;
+        }
+        .login-logo span { color: var(--login-accent); font-style: italic; }
+        
         .login-box h2 {
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 2rem;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
         }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--login-accent);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: var(--login-accent);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1rem;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.6);
+            filter: brightness(1.1);
+        }
+        .login-btn:active { transform: translateY(0); }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-link a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .back-link a:hover { color: var(--login-accent); }
     </style>
 </head>
 <body>
     <section class="login-section">
-        <div class="login-box glass">
-            <h2>관리자 로그인</h2>
-            <form id="loginForm" class="reservation-form">
-                <div class="form-group">
-                    <label for="email">관리자 이메일</label>
-                    <input type="email" id="email" required placeholder="admin@example.com">
+        <div class="login-bg-orb"></div>
+        
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>Coding & <span>Play</span></h1>
+            </div>
+            <h2>?�장??로그??/h2>
+            <form id="loginForm">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="email"><i class="far fa-envelope" style="margin-right: 8px;"></i> 관리자 ?�메??/label>
+                    <input type="email" id="email" required placeholder="admin@Coding & Play">
                 </div>
-                <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" id="password" required placeholder="비밀번호 입력">
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label for="password"><i class="fas fa-lock" style="margin-right: 8px;"></i> 비�?번호</label>
+                    <input type="password" id="password" required placeholder="?�••••••�?>
                 </div>
-                <button type="submit" class="contact-btn" style="width: 100%; border:none; cursor:pointer;">로그인</button>
+                <button type="submit" class="login-btn">?�?�보???�속</button>
             </form>
-            <p style="text-align:center; margin-top:1.5rem;">
-                <a href="index.html" style="color:var(--text-muted); font-size:0.9rem;">홈으로 돌아가기</a>
+            <p class="back-link">
+                <a href="index.html"><i class="fas fa-arrow-left" style="margin-right: 5px;"></i> ?�페?��?�??�아가�?/a>
             </p>
         </div>
     </section>
@@ -49,3 +154,4 @@
     <script type="module" src="firebase.js"></script>
 </body>
 </html>
+

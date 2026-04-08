@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://codelab.ai.kr/$1",
+      "permanent": true
+    }
+  ]
+}
