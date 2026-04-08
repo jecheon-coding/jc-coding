@@ -1,22 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Smooth Scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // 1. Smooth Scrolling (Better catch for index.html#about)
+    document.querySelectorAll('a[href*="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            if (href !== '#' && href.startsWith('#')) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    // Close mobile menu
-                    const navLinks = document.querySelector('.nav-links');
-                    const menuToggle = document.querySelector('.menu-toggle');
-                    if (navLinks && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
+            const url = new URL(this.href);
+            
+            // 현재 페이지 내의 앵커인 경우
+            if (url.pathname === window.location.pathname || url.pathname === '/' + window.location.pathname.split('/').pop()) {
+                const targetId = href.split('#')[1];
+                if (targetId) {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        // URL에 #이 남지 않도록 히스토리 정리 (선택 사항)
+                        // history.pushState(null, null, window.location.pathname);
+                        
+                        // Close mobile menu
+                        const navLinks = document.querySelector('.nav-links');
+                        const menuToggle = document.getElementById('menuToggle');
+                        if (navLinks && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            if(menuToggle) menuToggle.classList.remove('active');
+                        }
                     }
                 }
             }
