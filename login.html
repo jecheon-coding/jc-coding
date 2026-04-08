@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 로그??| Coding & Play</title>
+    <title>관리자 로그인 | Coding & Play</title>
     <link rel="stylesheet" href="style.css?v=8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -21,7 +21,7 @@
             overflow: hidden;
             font-family: 'Pretendard', sans-serif;
         }
-        /* 배경 ?�니메이???�브?�트 */
+        /* 배경 애니메이션 오브젝트 */
         .login-bg-orb {
             position: absolute;
             width: 500px;
@@ -59,7 +59,7 @@
             letter-spacing: -1px;
             color: #fff;
         }
-        .login-logo span { color: var(--login-accent); font-style: italic; }
+        .login-logo span { color: var(--login-accent); }
         
         .login-box h2 {
             text-align: center;
@@ -133,20 +133,20 @@
             <div class="login-logo">
                 <h1>Coding & <span>Play</span></h1>
             </div>
-            <h2>?�장??로그??/h2>
+            <h2>원장님 로그인</h2>
             <form id="loginForm">
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label for="email"><i class="far fa-envelope" style="margin-right: 8px;"></i> 관리자 ?�메??/label>
-                    <input type="email" id="email" required placeholder="admin@Coding & Play">
+                    <label for="email"><i class="far fa-envelope" style="margin-right: 8px;"></i> 관리자 이메일</label>
+                    <input type="email" id="email" required placeholder="admin@codingandplay.com">
                 </div>
                 <div class="form-group" style="margin-bottom: 2rem;">
-                    <label for="password"><i class="fas fa-lock" style="margin-right: 8px;"></i> 비�?번호</label>
-                    <input type="password" id="password" required placeholder="?�••••••�?>
+                    <label for="password"><i class="fas fa-lock" style="margin-right: 8px;"></i> 비밀번호</label>
+                    <input type="password" id="password" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="login-btn">?�?�보???�속</button>
+                <button type="submit" class="login-btn">대시보드 접속</button>
             </form>
             <p class="back-link">
-                <a href="index.html"><i class="fas fa-arrow-left" style="margin-right: 5px;"></i> ?�페?��?�??�아가�?/a>
+                <a href="index.html"><i class="fas fa-arrow-left" style="margin-right: 5px;"></i> 홈페이지로 돌아가기</a>
             </p>
         </div>
     </section>
@@ -154,4 +154,3 @@
     <script type="module" src="firebase.js"></script>
 </body>
 </html>
-
