@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial Load Check (Remove # if coming from other page)
+    // 1. Initial Load Check
     if (window.location.hash) {
         const targetId = window.location.hash.substring(1);
         const target = document.getElementById(targetId);
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Smooth Scrolling & URL Cleanup
+    // 2. Smooth Scrolling
     document.querySelectorAll('a[href*="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
@@ -35,22 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Modal Logic (Restored & Specialized)
-    const setupModal = (modalId, openBtnClass) => {
-        const modal = document.getElementById(modalId);
-        const btns = document.querySelectorAll(openBtnClass);
-        if (!modal) return;
-        btns.forEach(btn => {
-            btn.onclick = (e) => {
-                e.preventDefault();
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            };
-        });
-        // Close on click outside or close buttons
-        modal.onclick = (e) => { if(e.target === modal) closeModal(modalId); };
-    };
-
+    // 3. Modal Logic (Improved & Corrected IDs)
     window.closeModal = (id) => {
         const m = document.getElementById(id);
         if(m) {
@@ -59,12 +44,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initialize all modals
-    setupModal('reservationModal', '.btn-reservation');
-    setupModal('reviewModal', '.btn-review'); // Add btn-review class to review buttons
+    const setupModal = (modalId, openSelector) => {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        // Open logic
+        if (openSelector) {
+            document.querySelectorAll(openSelector).forEach(btn => {
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                };
+            });
+        }
 
-    document.getElementById('closeModal')?.addEventListener('click', () => closeModal('reservationModal'));
-    document.getElementById('closeReviewModal')?.addEventListener('click', () => closeModal('reviewModal'));
+        // Close logic (Overlay click)
+        modal.onclick = (e) => { if(e.target === modal) closeModal(modalId); };
+    };
+
+    // Initialize individual modals
+    setupModal('reservationModal', '.btn-reservation');
+    setupModal('reviewModal', '#openReviewBtn'); // Use user's ID
+    setupModal('passwordModal', null); // Opened via firebase.js
+    setupModal('editModal', null);     // Opened via firebase.js
+
+    // Global close buttons listeners (User's custom IDs)
+    const closeMapping = {
+        'closeModal': 'reservationModal',
+        'closeReviewBtn': 'reviewModal',
+        'closePasswordBtn': 'passwordModal',
+        'closeEditBtn': 'editModal'
+    };
+    Object.keys(closeMapping).forEach(btnId => {
+        document.getElementById(btnId)?.addEventListener('click', () => closeModal(closeMapping[btnId]));
+    });
 
     // 4. Mobile Menu Toggle
     const menuToggle = document.getElementById('menuToggle');

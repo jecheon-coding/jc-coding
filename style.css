@@ -1316,3 +1316,82 @@ td {
     background: rgba(255, 255, 255, 0.05);
     color: white;
 }
+
+/* --- Password Confirmation Modal (Refined Match) --- */
+#passwordModal .modal-content {
+    max-width: 400px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+#passwordModal .modal-header h3 {
+    color: #3b82f6;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+#passwordModal .modal-header h3::before {
+    content: " 🔒\;
+ font-size: 1.6rem;
+}
+#passwordModal .modal-header p {
+ color: #a1a1aa;
+ font-size: 1rem;
+ margin-bottom: 2rem;
+}
+#checkPassword {
+ background: #1a1a1c;
+ border: 1px solid #333;
+ border-radius: 12px;
+ padding: 15px;
+ color: white;
+ width: 100%;
+ font-size: 1.1rem;
+ text-align: center;
+ margin-bottom: 1.5rem;
+ transition: border-color 0.3s, box-shadow 0.3s;
+}
+#checkPassword:focus {
+ border-color: #3b82f6;
+ box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+ outline: none;
+}
+#actionEditBtn {
+ background: #27272a;
+ color: #efefef;
+ border: 1px solid #3f3f46;
+ padding: 12px;
+ border-radius: 30px;
+ font-weight: 600;
+ transition: background 0.2s;
+}
+#actionEditBtn:hover { background: #3f3f46; }
+
+#actionDeleteBtn {
+ background: rgba(239, 68, 68, 0.05);
+ color: #ef4444;
+ border: 1px solid rgba(239, 68, 68, 0.3);
+ padding: 12px;
+ border-radius: 30px;
+ font-weight: 600;
+ transition: all 0.2s;
+}
+#actionDeleteBtn:hover {
+ background: #ef4444;
+ color: white;
+}
+
+/* Review Item Dots (...) Layout */
+.review-menu-btn {
+ position: absolute;
+ top: 1.5rem;
+ right: 1.5rem;
+ color: #555;
+ font-size: 1.5rem;
+ cursor: pointer;
+ transition: color 0.2s;
+}
+.review-menu-btn:hover { color: #888; }
+
