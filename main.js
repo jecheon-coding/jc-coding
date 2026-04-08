@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Smooth Scrolling (Better catch for index.html#about)
+    // 1. Smooth Scrolling (No # in URL)
     document.querySelectorAll('a[href*="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            const url = new URL(this.href);
+            const url = new URL(this.href, window.location.origin);
             
-            // 현재 페이지 내의 앵커인 경우
-            if (url.pathname === window.location.pathname || url.pathname === '/' + window.location.pathname.split('/').pop()) {
+            // 파일명(index.html 등)을 제거한 경로 비교
+            const currentPath = window.location.pathname.replace('index.html', '').replace(/\/$/, '');
+            const targetPath = url.pathname.replace('index.html', '').replace(/\/$/, '');
+
+            if (currentPath === targetPath) {
                 const targetId = href.split('#')[1];
                 if (targetId) {
                     const target = document.getElementById(targetId);
@@ -16,10 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             top: target.offsetTop - 80,
                             behavior: 'smooth'
                         });
-                        // URL에 #이 남지 않도록 히스토리 정리 (선택 사항)
-                        // history.pushState(null, null, window.location.pathname);
                         
-                        // Close mobile menu
+                        // 주소창에 #이 남지 않도록 처리
+                        if (window.history.pushState) {
+                            window.history.pushState(null, null, url.pathname.includes('recruitment') ? url.pathname : '/');
+                        }
+                        
+                        // 모바일 메뉴 닫기
                         const navLinks = document.querySelector('.nav-links');
                         const menuToggle = document.getElementById('menuToggle');
                         if (navLinks && navLinks.classList.contains('active')) {
