@@ -55,7 +55,7 @@ const editContent = document.getElementById('editContent');
 async function loadReviews() {
     if (!reviewContainer) return;
     try {
-        const q = query(collection(db, "reviews"));
+        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         const querySnapshot = await getDocs(q);
         reviewContainer.innerHTML = ''; 
         if (querySnapshot.empty) {
@@ -100,7 +100,7 @@ async function loadReviews() {
 async function loadSchedules() {
     if (!scheduleContainer) return;
     try {
-        const q = query(collection(db, "schedules"));
+        const q = query(collection(db, "schedules"), orderBy("order", "asc"));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
             scheduleContainer.innerHTML = `
@@ -300,7 +300,7 @@ async function loadAdminData() {
 
 async function loadAdminReviews() {
     if (!adminReviewList) return;
-    const q = query(collection(db, "reviews"));
+    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
     const querySnapshot = await getDocs(q);
     adminReviewList.innerHTML = '';
     querySnapshot.forEach(docSnap => {
@@ -314,7 +314,7 @@ async function loadAdminReviews() {
 }
 async function loadAdminSchedules() {
     if (!adminScheduleList) return;
-    const q = query(collection(db, "schedules"));
+    const q = query(collection(db, "schedules"), orderBy("order", "asc"));
     const querySnapshot = await getDocs(q);
     adminScheduleList.innerHTML = '';
     querySnapshot.forEach(docSnap => {
@@ -330,7 +330,7 @@ async function loadAdminSchedules() {
 // Added: Load Inquiries for Admin
 async function loadAdminInquiries() {
     if (!adminInquiryList) return;
-    const q = query(collection(db, "reservations"));
+    const q = query(collection(db, "reservations"), orderBy("createdAt", "desc"));
     const querySnapshot = await getDocs(q);
     adminInquiryList.innerHTML = '';
     if (querySnapshot.empty) {
@@ -421,7 +421,7 @@ async function loadStats() {
         }
 
         // 2. 주간 방문 추이 데이터 가져오기 (최신 7일)
-        const q = query(collection(db, "daily_visits"));
+        const q = query(collection(db, "daily_visits"), orderBy("__name__", "desc"));
         const querySnapshot = await getDocs(q);
         
         const labels = [];
