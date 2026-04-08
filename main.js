@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Smooth Scrolling for Navigation Links
+    // 1. Smooth Scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            
-            // href가 '#'이거나 비어있지 않은 경우에만 스크롤 로직 실행
             if (href !== '#' && href.startsWith('#')) {
                 e.preventDefault();
                 const target = document.querySelector(href);
@@ -26,21 +24,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 2. Mobile Menu Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
+    const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.querySelector('.nav-links');
-
-    if (menuToggle) {
+    if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             menuToggle.classList.toggle('active');
         });
     }
 
-    // 3. Reveal Animations on Scroll
-    const observerOptions = {
-        threshold: 0.1
-    };
+    // 3. Header Scroll Effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
 
+    // 4. Reveal Animations
+    const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -48,18 +52,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, observerOptions);
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // 4. Header transparency on scroll
-    const header = document.querySelector('#navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.background = 'rgba(10, 11, 20, 0.95)';
-            header.style.backdropFilter = 'blur(10px)';
-        } else {
-            header.style.background = 'rgba(10, 11, 20, 0.8)';
-            header.style.backdropFilter = 'blur(5px)';
+    // 5. Modal Logic (Consultation & Reviews)
+    
+    // --- Consultation Modal ---
+    const resModal = document.getElementById('reservationModal');
+    const openResBtns = document.querySelectorAll('.btn-reservation');
+    const closeResBtn = document.getElementById('closeModal');
+
+    if (resModal && openResBtns.length > 0) {
+        openResBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                resModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+    }
+    if (closeResBtn) {
+        closeResBtn.addEventListener('click', () => {
+            resModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // --- Review Modal ---
+    const revModal = document.getElementById('reviewModal');
+    const openRevBtn = document.getElementById('openReviewBtn');
+    const closeRevBtn = document.getElementById('closeReviewBtn');
+
+    if (revModal && openRevBtn) {
+        openRevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            revModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    if (closeRevBtn) {
+        closeRevBtn.addEventListener('click', () => {
+            revModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Modal background close
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) {
+            e.target.classList.remove('active');
+            document.body.style.overflow = '';
         }
     });
 });
