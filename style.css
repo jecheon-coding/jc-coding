@@ -1270,3 +1270,49 @@ td {
     height: 250px !important;
   }
 }
+
+/* --- Review Card Menu --- */
+.review-card { position: relative; }
+.review-menu-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 5px;
+    transition: color 0.3s;
+    z-index: 5;
+}
+.review-menu-btn:hover { color: white; }
+.review-dropdown {
+    position: absolute;
+    top: 3.5rem;
+    right: 1.5rem;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px;
+    display: none;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.review-dropdown.active { display: flex; flex-direction: column; gap: 4px; }
+.review-dropdown button {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.review-dropdown button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
