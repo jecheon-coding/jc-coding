@@ -1,15 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Smooth Scrolling (No # in URL)
+    // 1. Initial Load Check (Remove # if coming from other page)
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+            // Wait slightly for layout to settle, then scroll smoothly
+            setTimeout(() => {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                // Remove hash from URL without reloading
+                if (window.history.replaceState) {
+                    window.history.replaceState(null, null, window.location.pathname);
+                }
+            }, 300);
+        }
+    }
+
+    // 2. Smooth Scrolling (Click event)
     document.querySelectorAll('a[href*="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             const url = new URL(this.href, window.location.origin);
             
-            // 파일명(index.html 등)을 제거한 경로 비교
-            const currentPath = window.location.pathname.replace('index.html', '').replace(/\/$/, '');
-            const targetPath = url.pathname.replace('index.html', '').replace(/\/$/, '');
+            // Normalize paths: remove .html and trailing slashes for comparison
+            const currentPath = window.location.pathname.replace('.html', '').replace(/\/$/, '') || '/';
+            const targetPath = url.pathname.replace('.html', '').replace(/\/$/, '') || '/';
 
-            if (currentPath === targetPath) {
+            // If it's the same page or we are going to index (root)
+            if (currentPath === targetPath || (targetPath === '/' && currentPath === '/index')) {
                 const targetId = href.split('#')[1];
                 if (targetId) {
                     const target = document.getElementById(targetId);
@@ -20,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             behavior: 'smooth'
                         });
                         
-                        // 주소창에 #이 남지 않도록 처리
+                        // Keep URL clean
                         if (window.history.pushState) {
-                            window.history.pushState(null, null, url.pathname.includes('recruitment') ? url.pathname : '/');
+                            window.history.pushState(null, null, targetPath === '/index' ? '/' : url.pathname);
                         }
                         
-                        // 모바일 메뉴 닫기
+                        // Toggle mobile menu if open
                         const navLinks = document.querySelector('.nav-links');
                         const menuToggle = document.getElementById('menuToggle');
                         if (navLinks && navLinks.classList.contains('active')) {
@@ -38,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Mobile Menu Toggle
+    // 3. Mobile Menu Toggle
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.querySelector('.nav-links');
     if (menuToggle && navLinks) {
@@ -48,30 +68,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Header Scroll Effect
+    // 4. Header Scroll Effect
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+    }
 
-    // 4. Reveal Animations
+    // 5. Reveal Animations
     const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('active');
         });
     }, observerOptions);
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // 5. Modal Logic (Consultation & Reviews)
-    
-    // --- Consultation Modal ---
+    // 6. Modal Logic (Consultation)
     const resModal = document.getElementById('reservationModal');
     const openResBtns = document.querySelectorAll('.btn-reservation');
     const closeResBtn = document.getElementById('closeModal');
@@ -91,31 +106,4 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         });
     }
-
-    // --- Review Modal ---
-    const revModal = document.getElementById('reviewModal');
-    const openRevBtn = document.getElementById('openReviewBtn');
-    const closeRevBtn = document.getElementById('closeReviewBtn');
-
-    if (revModal && openRevBtn) {
-        openRevBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            revModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    }
-    if (closeRevBtn) {
-        closeRevBtn.addEventListener('click', () => {
-            revModal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    }
-
-    // Modal background close
-    window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay')) {
-            e.target.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
 });
