@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = document.getElementById(targetId);
         if (target) {
             setTimeout(() => {
-                window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
                 if (window.history.replaceState) window.history.replaceState(null, null, window.location.pathname);
             }, 300);
         }
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const target = document.getElementById(targetId);
                     if (target) {
                         e.preventDefault();
-                        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                        window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
                         if (window.history.pushState) window.history.pushState(null, null, targetPath === '/index' ? '/' : url.pathname);
                         document.querySelector('.nav-links')?.classList.remove('active');
                         document.getElementById('menuToggle')?.classList.remove('active');

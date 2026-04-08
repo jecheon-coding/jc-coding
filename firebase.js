@@ -205,3 +205,4 @@ loadReviews();
 const todayStr = new Date().toISOString().split('T')[0];
 async function trackVisit() { /* Same as before */ }
 trackVisit();
+loadSchedules();

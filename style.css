@@ -1395,3 +1395,39 @@ td {
 }
 .review-menu-btn:hover { color: #888; }
 
+
+/* --- Location Section (Refined Match for Image 2) --- */
+.location-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    padding: 100px 0;
+}
+.location-content > div:first-child {
+    flex: 1;
+    max-width: 500px;
+    text-align: left;
+}
+.location-content .contact-card {
+    flex: 1.2;
+    max-width: 600px;
+    margin: 0; /* Clear existing margins */
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+    .location-content {
+        flex-direction: column;
+        gap: 3rem;
+        padding: 60px 20px;
+    }
+    .location-content > div:first-child {
+        text-align: center;
+        max-width: 100%;
+    }
+    .location-content .contact-card {
+        width: 100%;
+    }
+}
+
