@@ -15,23 +15,29 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// --- 1. Event Listeners (Must be at the top for robustness) ---
+// --- 1. Event Listeners & Auth State ---
 document.addEventListener('DOMContentLoaded', () => {
     // Login Form
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const pw = document.getElementById('password').value;
             try {
-                await signInWithEmailAndPassword(auth, email, pw);
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
                 location.href = 'admin.html';
-            } catch (error) {
-                console.error("Login Error:", error);
-                alert('로그인 실패: 아이디 또는 비밀번호를 확인해주세요.');
-            }
+            } catch (err) { alert('로그인 실패: 정보를 확인해주세요.'); }
         });
+    }
+
+    // Logout Button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.onclick = async () => {
+            if(confirm('로그아웃 하시겠습니까?')) {
+                await signOut(auth);
+                location.href = 'login.html';
+            }
+        };
     }
 
     // Reservation Form
@@ -48,25 +54,94 @@ document.addEventListener('DOMContentLoaded', () => {
                     createdAt: serverTimestamp()
                 };
                 await addDoc(collection(db, "reservations"), data);
-                
-                // Formspree email
+                // Notification (Optional)
                 const formData = new FormData(resForm);
-                fetch("https://formspree.io/f/xeeppoza", {
-                    method: "POST",
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                }).catch(err => console.error("Email send error:", err));
-
-                alert('상담 신청이 완료되었습니다.');
+                fetch("https://formspree.io/f/xeeppoza", { method: "POST", body: formData, headers: {'Accept': 'application/json'} });
+                
+                alert('상담 신청 완료!');
                 resForm.reset();
                 document.getElementById('reservationModal').classList.remove('active');
-                document.body.style.overflow = '';
-            } catch (err) { alert('오류가 발생했습니다.'); }
+            } catch (err) { alert('오류 발생'); }
         });
     }
 });
 
-// --- 2. Data Loading Functions (Wrapped in try-catch) ---
+// Auth Persistence & Admin Data Loading
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const path = window.location.pathname;
+        if (path.includes('login.html')) location.href = 'admin.html';
+        if (path.includes('admin.html')) loadAdminData();
+    } else {
+        if (window.location.pathname.includes('admin.html')) location.href = 'login.html';
+    }
+});
+
+// --- 2. Admin Logic Functions ---
+async function loadAdminData() {
+    loadAdminReviews();
+    loadAdminSchedules();
+    loadAdminInquiries();
+    loadStats();
+}
+
+async function loadAdminReviews() {
+    const list = document.getElementById('adminReviewList');
+    if (!list) return;
+    const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    list.innerHTML = '';
+    snap.forEach(docSnap => {
+        const d = docSnap.data();
+        const id = docSnap.id;
+        const div = document.createElement('div');
+        div.className = 'admin-item glass';
+        div.style.padding = '1rem';
+        div.style.marginBottom = '10px';
+        div.style.display = 'flex';
+        div.style.justifyContent = 'space-between';
+        div.innerHTML = `<div><strong>${escapeHTML(d.name)}</strong><p>${escapeHTML(d.content)}</p></div><button class="tab-btn" style="background:#ef4444; border:none;" onclick="deleteItem('reviews', '${id}')">삭제</button>`;
+        list.appendChild(div);
+    });
+}
+
+async function loadAdminInquiries() {
+    const table = document.getElementById('inquiryTableBody');
+    if (!table) return;
+    const q = query(collection(db, "reservations"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    table.innerHTML = '';
+    snap.forEach(docSnap => {
+        const d = docSnap.data();
+        const date = d.createdAt ? d.createdAt.toDate().toLocaleString() : '-';
+        table.innerHTML += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:10px;">${date}</td><td style="padding:10px;">${escapeHTML(d.name)}</td><td style="padding:10px;">${escapeHTML(d.phone)}</td><td style="padding:10px;">${escapeHTML(d.grade)}</td><td style="padding:10px;">${escapeHTML(d.message)}</td></tr>`;
+    });
+}
+
+async function loadAdminSchedules() {
+    const list = document.getElementById('adminScheduleList');
+    if (!list) return;
+    const q = query(collection(db, "schedules"), orderBy("order", "asc"));
+    const snap = await getDocs(q);
+    list.innerHTML = '';
+    snap.forEach(docSnap => {
+        const d = docSnap.data();
+        const div = document.createElement('div');
+        div.className = 'admin-item glass';
+        div.style.padding = '1rem'; div.style.marginBottom = '10px';
+        div.innerHTML = `<strong>${escapeHTML(d.category)}</strong> - ${escapeHTML(d.course)} (${escapeHTML(d.status)})`;
+        list.appendChild(div);
+    });
+}
+
+window.deleteItem = async (col, id) => {
+    if(confirm('정말 삭제하시겠습니까?')) {
+        await deleteDoc(doc(db, col, id));
+        loadAdminData();
+    }
+};
+
+// --- 3. Public Data Loading ---
 async function loadReviews() {
     const container = document.getElementById('reviewContainer');
     if (!container) return;
@@ -74,29 +149,11 @@ async function loadReviews() {
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
         container.innerHTML = '';
-        if (snap.empty) {
-            container.innerHTML = '<p style="text-align:center; padding:3rem 0; color:var(--text-muted);">등록된 후기가 없습니다.</p>';
-            return;
-        }
         snap.forEach(docSnap => {
             const data = docSnap.data();
-            const id = docSnap.id;
-            const card = document.createElement('div');
-            card.className = 'review-card glass reveal active';
-            card.innerHTML = `
-                <div class="review-quote">"</div>
-                <p style="white-space: pre-wrap;">${escapeHTML(data.content)}</p>
-                <div class="reviewer">
-                    <div class="reviewer-avatar">${(data.name || "익")[0]}</div>
-                    <div class="reviewer-info">
-                        <h4>${maskName(data.name || "익명")}</h4>
-                        <span>${escapeHTML(data.grade || "")}</span>
-                    </div>
-                </div>
-            `;
-            container.appendChild(card);
+            container.innerHTML += `<div class="review-card glass reveal active"><p>${escapeHTML(data.content)}</p><h4>${escapeHTML(data.name)}</h4></div>`;
         });
-    } catch (e) { console.error("Review Loading Error:", e); }
+    } catch (e) {}
 }
 
 async function loadSchedules() {
@@ -107,38 +164,38 @@ async function loadSchedules() {
         const snap = await getDocs(q);
         container.innerHTML = '';
         snap.forEach(docSnap => {
-            const data = docSnap.data();
-            let statusColor = data.status === '마감 임박' ? '#ef4444' : (data.status === '모집 중' ? '#22c55e' : '#3b82f6');
-            container.innerHTML += `
-                <tr>
-                    <td>${escapeHTML(data.category)}</td>
-                    <td>${escapeHTML(data.grade)}</td>
-                    <td>${escapeHTML(data.course)}</td>
-                    <td>${escapeHTML(data.time)}</td>
-                    <td><span class="tag-active" style="color:${statusColor}">${escapeHTML(data.status)}</span></td>
-                </tr>
-            `;
+            const d = docSnap.data();
+            container.innerHTML += `<tr><td>${escapeHTML(d.category)}</td><td>${escapeHTML(d.grade)}</td><td>${escapeHTML(d.course)}</td><td>${escapeHTML(d.time)}</td><td>${escapeHTML(d.status)}</td></tr>`;
         });
-    } catch (e) { console.error("Schedule Loading Error:", e); }
+    } catch (e) {}
+}
+
+async function loadStats() {
+    try {
+        const totalSnap = await getDoc(doc(db, "stats", "visitor_info"));
+        if (totalSnap.exists() && document.getElementById('totalVisits')) {
+            document.getElementById('totalVisits').innerText = totalSnap.data().total.toLocaleString();
+        }
+    } catch (e) {}
 }
 
 // --- Utils ---
-function maskName(name) {
-    if (!name || name.length <= 1) return name;
-    return name[0] + "*" + (name.length > 2 ? name[name.length-1] : "");
-}
 function escapeHTML(str) {
     if (!str) return '';
     return str.replace(/[&<>'"]/g, tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag]));
 }
 
-// Auth State Check
-onAuthStateChanged(auth, (user) => {
-    if (user && window.location.pathname.includes('login.html')) {
-        location.href = 'admin.html';
-    }
-});
+// Track Visit
+async function trackVisit() {
+    if (sessionStorage.getItem('v')) return;
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        await updateDoc(doc(db, "stats", "visitor_info"), { total: increment(1) });
+        await setDoc(doc(db, "daily_visits", today), { count: increment(1) }, { merge: true });
+        sessionStorage.setItem('v', '1');
+    } catch (e) {}
+}
 
-// Run
+trackVisit();
 loadReviews();
 loadSchedules();
