@@ -219,8 +219,8 @@ nav.scrolled {
   width: 100%;
 }
 .hero-text {
-  flex: 1;
-  min-width: 500px;
+  flex: 1.2;
+  min-width: 600px;
 }
 
 .hero-title {
@@ -230,7 +230,7 @@ nav.scrolled {
 
   line-height: 1.2;
   word-break: keep-all;
-  max-width: 650px; 
+  max-width: 750px; 
 }
 
 .hero-subtitle {
@@ -278,7 +278,7 @@ nav.scrolled {
 }
 
 .hero-img {
-  flex: 1;
+  flex: 0.8;
   position: relative;
   display: flex;
   justify-content: center;
