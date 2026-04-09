@@ -1516,17 +1516,46 @@ nav.scrolled {
       display: none !important;
     }
 
-    .btn-primary,
-    .btn-secondary {
-      padding: 0.7rem 1.4rem !important;
-      font-size: 14px !important;
+    .hero {
+      padding: 6rem 5% 3rem !important;
+      min-height: auto !important; /* 모바일 브라우저 주소창 고려 */
+    }
+
+    .hero-flex {
+      flex-direction: column !important;
+      text-align: center !important;
+      gap: 30px !important;
+    }
+
+    .hero-text {
+      min-width: unset !important; /* 화면 뚫고 나가는 현상 해결 */
+      width: 100% !important;
+      align-items: center !important;
+      text-align: center !important;
+      padding: 0 !important;
+    }
+
+    .hero-img {
+      display: none !important; /* 모바일 가독성을 위해 복잡한 이미지 숨김 */
     }
 
     .hero-btns {
       gap: 12px !important;
       flex-wrap: wrap !important;
       justify-content: center !important;
-      margin-top: 1.5rem !important;
+      margin-top: 1rem !important;
+      width: 100% !important;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.8rem 1.5rem !important;
+      font-size: 14px !important;
+      flex: 1 !important;
+      min-width: 140px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
 
     /* 히어로 뱃지 및 태그 모바일 최적화 */
@@ -1551,9 +1580,18 @@ nav.scrolled {
 
     .hero-title,
     h2 {
-      font-size: 1.8rem !important;
-      line-height: 1.2 !important;
+      font-size: 1.85rem !important;
+      line-height: 1.25 !important;
       word-break: keep-all;
+      margin-bottom: 1.5rem !important;
+    }
+
+    .hero-sub {
+      text-align: center !important;
+      margin: 0 auto 2.5rem !important;
+      font-size: 1rem !important;
+      line-height: 1.6 !important;
+      color: #94a3b8 !important;
     }
 
     .container {
