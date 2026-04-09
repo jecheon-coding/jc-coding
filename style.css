@@ -407,6 +407,7 @@ nav.scrolled {
 .section {
   padding: 8rem 0;
   position: relative;
+  scroll-margin-top: 80px; /* 네비게이션 클릭 시 위치 보정 */
 }
 
 .section.dark-bg {
@@ -1550,8 +1551,22 @@ nav.scrolled {
 
     .hero-title,
     h2 {
-      font-size: 1.6rem !important;
+      font-size: 1.8rem !important;
       line-height: 1.2 !important;
+      word-break: keep-all;
+    }
+
+    .container {
+      padding: 0 20px !important; /* 좌우 여백 균일화 */
+    }
+
+    .review-grid {
+      grid-template-columns: 1fr !important; /* 모바일에서 1줄로 꽉 채움 */
+      gap: 1.5rem !important;
+    }
+
+    .review-card {
+      padding: 1.8rem !important; /* 모바일 여백 최적화 */
     }
 
     h3 {
