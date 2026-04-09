@@ -18,9 +18,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Master Password (Backdoor for Parents' Posts)
-const MASTER_PW = "admin1004";
-
 // --- Form & Modal Elements ---
 const reviewContainer = document.getElementById('reviewContainer');
 const reviewForm = document.getElementById('reviewForm');
@@ -201,7 +198,8 @@ if (actionEditBtn) {
     actionEditBtn.onclick = () => {
         const inputPw = checkPasswordInput.value.trim();
         const actualPw = targetReviewPassword.value;
-        if (inputPw === actualPw || inputPw === MASTER_PW) {
+        const isAdmin = auth.currentUser !== null;
+        if (inputPw === actualPw || isAdmin) {
             passwordModal.classList.remove('active');
             editModal.classList.add('active');
         } else { passwordError.style.display = 'block'; }
@@ -211,7 +209,8 @@ if (actionDeleteBtn) {
     actionDeleteBtn.onclick = async () => {
         const inputPw = checkPasswordInput.value.trim();
         const actualPw = targetReviewPassword.value;
-        if (inputPw === actualPw || inputPw === MASTER_PW) {
+        const isAdmin = auth.currentUser !== null;
+        if (inputPw === actualPw || isAdmin) {
             if (confirm('정말로 삭제하시겠습니까?')) {
                 await deleteDoc(doc(db, "reviews", targetReviewId.value));
                 alert('삭제되었습니다.');
